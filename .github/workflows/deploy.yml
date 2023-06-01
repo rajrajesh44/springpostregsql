@@ -14,7 +14,8 @@ name: Build and Deploy to GKE
 
 on:
   push:
-    branches: [ "main" ]
+    branches-ignore:
+      - main
 
 env:
   PROJECT_ID:  dark-sensor-386805
