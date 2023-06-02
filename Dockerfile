@@ -1,11 +1,11 @@
-FROM maven:3.8.2-jdk-8-slim AS build
+FROM maven:3.8.3-openjdk-17 as builder
 WORKDIR /spring-boot-jpa-postgresql
-COPY . /spring-boot-jpa-postgresql
+COPY pom.xml .
+COPY src ./src
 RUN mvn -f /spring-boot-jpa-postgresql/pom.xml clean package
 
 
-FROM openjdk:8-jdk-alpine
-VOLUME /tmp
-EXPOSE 8100
-COPY --from=build /spring-boot-jpa-postgresql/*.jar app.jar
-ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /app.jar" ]
+
+FROM openjdk:17.0-jdk-slim
+COPY --from=builder /spring-boot-jpa-postgresql/*.jar app.jar
+ENTRYPOINT ["java" , "-Djava.security.egd=file:/dev/./urandom", "-jar" /app.jar" ]
