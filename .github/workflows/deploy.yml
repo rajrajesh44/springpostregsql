@@ -104,6 +104,6 @@ jobs:
         chmod u+x ./kustomize
     - name: Deploy to GKE
       run: |
-        kubectl apply -f spring-boot-jpa-postgresql/deployment.yaml
+        kubectl apply -f deployment.yaml
         kubectl rollout status deployment/gke-test
         kubectl get services -o wide
