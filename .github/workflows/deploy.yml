@@ -78,7 +78,7 @@ jobs:
     # Push the Docker image to Google Artifact Registry
     - name: Publish
       run: |-
-        docker push "$us-central1-docker.pkg.dev/dark-sensor-386805/samples/static-site:$GITHUB_SHA"
+        docker push "us-central1-docker.pkg.dev/dark-sensor-386805/samples/static-site:$GITHUB_SHA"
     # Set up kustomize
     - name: Set up Kustomize
       run: |-
