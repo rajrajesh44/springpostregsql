@@ -97,7 +97,9 @@ jobs:
     - name: Publish
       run: |-
         docker push "us-central1-docker.pkg.dev/dark-sensor-386805/samples/static-site:$GITHUB_SHA"
-
+    - name: Install gke-gcloud-auth-plugin
+      run: gcloud components install gke-gcloud-auth-plugin
+  
     - name: Deploy to GKE
       run: |
         kubectl apply -f spring-boot-jpa-postgresql/deployment.yaml
