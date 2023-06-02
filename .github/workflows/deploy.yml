@@ -93,9 +93,10 @@ jobs:
       run: |
           gcloud auth configure-docker
 
-    - name: Push Docker image to Google Container Registry
-      run: |
-          docker push static-site:latest
+    # Push Docker image to Google Container Registry
+    - name: Publish
+      run: |-
+        docker push "us-central1-docker.pkg.dev/dark-sensor-386805/samples/static-site:$GITHUB_SHA"
 
     - name: Deploy to GKE
       run: |
