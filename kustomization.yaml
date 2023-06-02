@@ -1,0 +1,5 @@
+cat <<EOF >./kustomization.yaml
+resources:
+- deployment.yaml
+- service.yaml
+EOF
