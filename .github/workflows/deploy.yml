@@ -104,7 +104,7 @@ jobs:
         chmod u+x ./kustomize
     - name: Deploy to GKE
       run: |
-        kubectl create deployment springproject --image=us-central1-docker.pkg.dev/dark-sensor-386805/samples/static-site:$GITHUB_SHA"
+        kubectl create deployment springproject --image=us-central1-docker.pkg.dev/dark-sensor-386805/samples/static-site:$GITHUB_SHA
         kubectl apply -f deployment.yaml
         kubectl rollout status deployment/gke-test
         kubectl get services -o wide
