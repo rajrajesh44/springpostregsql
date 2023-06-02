@@ -81,22 +81,24 @@ jobs:
     - name: Check outputs
       run: echo ${{ steps.vars.outputs.sha_short }}
     # Push the Docker image to Google Artifact Registry
-    - name: Publish
-      run: |-
-        docker push "us-central1-docker.pkg.dev/dark-sensor-386805/samples/static-site:$GITHUB_SHA"
-    # Set up kustomize
-    - name: Set up Kustomize
-      run: |-
-        curl -sfLo kustomize https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_linux_amd64
-        chmod u+x ./kustomize
-    # Deploy the Docker image to the GKE cluster
-    - name: Deploy
-      run: |-
-        # replacing the image name in the k8s template
-        #./kustomize edit set image LOCATION-docker.pkg.dev/PROJECT_ID/REPOSITORY/IMAGE:TAG=us-central1-docker.pkg.dev/dark-sensor-386805/samples/static-site:$GITHUB_SHA
-        #./kustomize build . | kubectl apply -f -
-        # kubectl create deployment gke-test --image=us-central1-docker.pkg.dev/dark-sensor-386805/samples/static-site:$GITHUB_SHA
-        kubectl apply -f deployment.yaml
-        
+    - name: Configure kubectl
+      run: |
+          gcloud container clusters get-credentials springdemo --region us-central1-c 
+
+    - name: Build Docker image
+      run: |
+          docker build -t static-site:latest .
+
+    - name: Authenticate with Google Container Registry
+      run: |
+          gcloud auth configure-docker
+
+    - name: Push Docker image to Google Container Registry
+      run: |
+          docker push static-site:latest
+
+    - name: Deploy to GKE
+      run: |
+        kubectl apply -f spring-boot-jpa-postgresql/deployment.yaml
         kubectl rollout status deployment/gke-test
         kubectl get services -o wide
