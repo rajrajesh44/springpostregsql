@@ -1,7 +1,9 @@
 FROM maven:3.8.2-jdk-8-slim AS build
 WORKDIR \spring-boot-jpa-postgresql
 COPY . \spring-boot-jpa-postgresql
-RUN mvn -f \spring-boot-jpa-postgresql/pom.xml clean package
+RUN mvn clean install
+
+
 
 FROM openjdk:8-jdk-alpine
 VOLUME /tmp
