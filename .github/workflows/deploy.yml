@@ -108,9 +108,7 @@ jobs:
              echo '${{ secrets.GCP_SA_KEY }}' > key.json
              gcloud auth activate-service-account --key-file=key.json
              gcloud container clusters get-credentials springdemo --region us-central1-c --project dark-sensor-386805
-    - name: Tag
-      run: |
-       gcloud builds submit --tag us-central1-docker.pkg.dev/dark-sensor-386805/springdemo/test-gke .
+  
   # Deploy the Docker image to the GKE cluster
     - name: Deploy
       run: |-
