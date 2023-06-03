@@ -1,15 +1,12 @@
-# Create a service.yaml file
-cat <<EOF > service.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: my-nginx
-  labels:
-    run: my-nginx
+  name: my-gke-service
 spec:
-  ports:
-  - port: 80
-    protocol: TCP
   selector:
-    run: my-nginx
-EOF
+    app: my-gke
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: LoadBalancer
