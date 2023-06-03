@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
         - name:  gke-test-container
-          image: us-central1-docker.pkg.dev/dark-sensor-386805/static-site:latest
+          image: us-central1-docker.pkg.dev/dark-sensor-386805/static-site
           ports:
             - containerPort: 8080
