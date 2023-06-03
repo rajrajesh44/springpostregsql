@@ -105,7 +105,7 @@ jobs:
         
     - name: Configure Google Cloud SDK
       run: |
-             echo "${{ secrets.GCP_SA_KEY }}" | base64 --decode > key.json
+             echo "${{ secrets.GCP_SA_KEY }}" > key.json
              gcloud auth activate-service-account --key-file=key.json
              gcloud container clusters get-credentials springdemo --region us-central1-c --project dark-sensor-386805
     - name: Deploy to GKE
