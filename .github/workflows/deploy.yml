@@ -108,11 +108,7 @@ jobs:
              echo '${{ secrets.GCP_SA_KEY }}' > key.json
              gcloud auth activate-service-account --key-file=key.json
              gcloud container clusters get-credentials springdemo --region us-central1-c --project dark-sensor-386805              
-    - name:  GKE
-      uses: google-github-actions/get-gke-credentials@v1.0.2
-      with:
-        cluster_name: springdemo
-        location: us-central1
+
 
   # Deploy the Docker image to the GKE cluster
     - name: Deploy
