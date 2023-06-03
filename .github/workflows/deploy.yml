@@ -108,8 +108,12 @@ jobs:
              echo '${{ secrets.GCP_SA_KEY }}' > key.json
              gcloud auth activate-service-account --key-file=key.json
              gcloud container clusters get-credentials springdemo --region us-central1-c --project dark-sensor-386805
-    - name: Deploy to GKE
-      run: |
-        kubectl apply -f deployment.yaml
-        kubectl rollout status deployment/gke-test
+  
+  # Deploy the Docker image to the GKE cluster
+    - name: Deploy
+      run: |-
+        # replacing the image name in the k8s template
+        ./kustomize edit set image LOCATION-docker.pkg.dev/PROJECT_ID/REPOSITORY/IMAGE:TAG=$GAR_LOCATION-docker.pkg.dev/dark-sensor-386805/samples/static-site:$GITHUB_SHA
+        ./kustomize build . | kubectl apply -f -
+        kubectl rollout status deployment/gke-test 
         kubectl get services -o wide
