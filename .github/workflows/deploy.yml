@@ -115,8 +115,9 @@ jobs:
       run: |-
          kubectl create deployment gke-test  --image=us-central1-docker.pkg.dev/dark-sensor-386805/samples/static-site:latest
          kubectl expose deployment gke-test   --type=LoadBalancer --port=8000
+         kubectl rollout status deployment/gke-test 
+         kubectl get services -o wide
         # replacing the image name in the k8s template
         #./kustomize edit set image TAG=us-central1-docker.pkg.dev/dark-sensor-386805/samples/static-site:$GITHUB_SHA
         #./kustomize build . | kubectl apply -f -
-        kubectl rollout status deployment/gke-test 
-        kubectl get services -o wide
+       
