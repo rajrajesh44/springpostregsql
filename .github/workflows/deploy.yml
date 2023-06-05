@@ -49,10 +49,6 @@ jobs:
         workload_identity_provider: 'projects/361696113234/locations/global/workloadIdentityPools/my-pool1/providers/my-provider'
         service_account: 'my-service-account@dark-sensor-386805.iam.gserviceaccount.com'
         access_token_lifetime: '300s'
-      
-    # The KUBECONFIG env var is automatically exported and picked up by kubectl.
-    - id: 'get-pods'
-      run: 'kubectl get pods'
 
     # Alternative option - authentication via credentials json
     # - id: 'auth'
