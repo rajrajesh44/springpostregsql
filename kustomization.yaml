@@ -1,19 +1,19 @@
 apiVersion: apps/v1
-kind: gke-test 
+kind: Deployment
 metadata:
-  name: springdemo
+  name: gke-test 
 spec:
+  selector:
+    matchLabels:
+      app: gke-test 
+  replicas: 2 # tells deployment to run 2 pods matching the template
   template:
+    metadata:
+      labels:
+        app:gke-test 
     spec:
       containers:
-        - name: springdemo
-          resources:
-            limits:
-              memory: 1250Mi
-            requests:
-              memory: 1250Mi
-          env:
-          - name: MEM_TOTAL_MB
-            valueFrom:
-              resourceFieldRef:
-                resource: limits.memory
+       name: gke-test 
+        image: 
+        ports:
+        - containerPort: 80

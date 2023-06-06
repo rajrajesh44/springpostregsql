@@ -1,19 +1,23 @@
-apiVersion: apps/v1
+apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name:  gke-test-deployment
+  labels:
+    service: gke-test
+  name: springdemo
 spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: gke-test
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
-        app: gke-test
+        service: gke-test
     spec:
+      imagePullSecrets:
+      - name: my-docker-secret
       containers:
-        - name:  gke-test-container
-          image:LOCATION-docker.pkg.dev/PROJECT_ID/REPOSITORY/IMAGE:
-          ports:
-            - containerPort: 8080
+      - name: springdemo
+        image: static-site
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 1234
+      restartPolicy: Always
