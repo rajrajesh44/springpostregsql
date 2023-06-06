@@ -1,9 +1,19 @@
-apiVersion: client.authentication.k8s.io/v1
-kind: Kustomization
-
-resources:
-  - deployment.yaml
-  - service.yaml
-  # Add more resource YAML files here as needed
-
-namespace: gke-test
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sbdemo
+spec:
+  template:
+    spec:
+      containers:
+        - name: sbdemo
+          resources:
+            limits:
+              memory: 1250Mi
+            requests:
+              memory: 1250Mi
+          env:
+          - name: MEM_TOTAL_MB
+            valueFrom:
+              resourceFieldRef:
+                resource: limits.memory
