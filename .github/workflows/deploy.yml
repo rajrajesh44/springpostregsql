@@ -114,7 +114,7 @@ jobs:
     - name: Deploy
       run: |-
 
-       ./kustomize edit set image ./kustomize edit set image LOCATION-docker.pkg.dev/PROJECT_ID/REPOSITORY/IMAGE:TAG=us-central1-docker.pkg.dev/dark-sensor-386805/samples/static-site:$GITHUB_SHA
+       ./kustomize edit set image LOCATION-docker.pkg.dev/PROJECT_ID/REPOSITORY/IMAGE:TAG=us-central1-docker.pkg.dev/dark-sensor-386805/samples/static-site:$GITHUB_SHA
         ./kustomize build . | kubectl apply -f -
         kubectl rollout status deployment/gke-test 
         kubectl get services -o wid
