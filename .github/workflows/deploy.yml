@@ -110,7 +110,7 @@ jobs:
              gcloud container clusters get-credentials springdemo --region us-central1-c --project dark-sensor-386805              
     - name: Install client-go credential plugin
       run: |
-          gcloud components install kubectl  
+          sudo apt-get install kubectl
           gcloud auth activate-service-account --key-file=key.json
           gcloud auth configure-docker
 
