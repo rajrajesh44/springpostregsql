@@ -1,19 +1,10 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: gke-test 
-spec:
-  selector:
-    matchLabels:
-      app: gke-test 
-  replicas: 2 # tells deployment to run 2 pods matching the template
-  template:
-    metadata:
-      labels:
-        app:gke-test 
-    spec:
-      containers:
-       name: gke-test 
-        image: 
-        ports:
-        - containerPort: 80
+bases:
+- ../base
+resources:
+- deployment.yaml
+namespace: 
+
+images:
+- name: static-site
+  newName:us-central1-docker.pkg.dev/dark-sensor-386805/samples/static-site:$GITHUB_SHA
+  newTag: us-central1-docker.pkg.dev/dark-sensor-386805/samples/static-site:$GITHUB_SHA
