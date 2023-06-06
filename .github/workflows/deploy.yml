@@ -111,6 +111,7 @@ jobs:
     - name: Install client-go credential plugin
       run: |
           sudo apt-get install kubectl
+          sudo apt update
           gcloud auth activate-service-account --key-file=key.json
           gcloud auth configure-docker
 
