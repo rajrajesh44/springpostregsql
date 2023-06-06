@@ -113,6 +113,7 @@ jobs:
   # Deploy the Docker image to the GKE cluster
     - name: Deploy
       run: |-
+       ./kustomize edit set image TAG=us-central1-docker.pkg.dev/dark-sensor-386805/samples/static-site:$GITHUB_SHA
         ./kustomize build . | kubectl apply -f -
          kubectl create deployment gke-test  --image "us-central1-docker.pkg.dev/dark-sensor-386805/samples/static-site:$GITHUB_SHA"
          kubectl expose deployment gke-test   --type=LoadBalancer --port=8000
