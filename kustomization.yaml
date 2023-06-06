@@ -1,12 +1,12 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: gke-test 
 metadata:
-  name: sbdemo
+  name: springdemo
 spec:
   template:
     spec:
       containers:
-        - name: sbdemo
+        - name: springdemo
           resources:
             limits:
               memory: 1250Mi
