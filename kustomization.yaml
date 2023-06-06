@@ -2,9 +2,7 @@ bases:
 - ../base
 resources:
 - deployment.yaml
-namespace: 
+namespace: springdemo
 
 images:
 - name: static-site
-  newName:us-central1-docker.pkg.dev/dark-sensor-386805/samples/static-site
-  newTag: latest
