@@ -1,23 +1,18 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
-    service: gke-test
-  name: springdemo
+  name: hello-world-app
 spec:
-  strategy:
-    type: Recreate
+  selector:
+    matchLabels:
+      app: hello-world-app
   template:
     metadata:
       labels:
-        service: gke-test
+        app: hello-world-app
     spec:
-      imagePullSecrets:
-      - name: my-docker-secret
       containers:
-      - name: springdemo
-        image: static-site
-        imagePullPolicy: Always
+      - name: hello-world-app
+        image: hello-world-app
         ports:
-        - containerPort: 1234
-      restartPolicy: Always
+          - containerPort: 8080
