@@ -70,12 +70,12 @@ jobs:
     # Build the Docker image
     - name: Build
       run: |-
-        docker build \
+       docker build \
           --tag "us-central1-docker.pkg.dev/dark-sensor-386805/samples/static-site:$GITHUB_SHA" \
           --build-arg GITHUB_SHA="$GITHUB_SHA" \
           --build-arg GITHUB_REF="$GITHUB_REF" \
           .
-          gcloud builds submit --tag gcr.io/[project-id]/system:1.0-SNAPSHOT
+          
     - name: Set outputs
       id: vars
       run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_SHA
