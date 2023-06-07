@@ -1,73 +1,9 @@
-# Kubernetes API version
-apiVersion: v1
-# kind of the API object
-apiVersion: v1
-kind: Config
-users:
-- name: my-user
-  user:
-    exec:
-      # Command to execute. Required.
-      command: "example-client-go-exec-plugin"
-
-      # API version to use when decoding the ExecCredentials resource. Required.
-      #
-      # The API version returned by the plugin MUST match the version listed here.
-      #
-      # To integrate with tools that support multiple versions (such as client.authentication.k8s.io/v1),
-      # set an environment variable, pass an argument to the tool that indicates which version the exec plugin expects,
-      # or read the version from the ExecCredential object in the KUBERNETES_EXEC_INFO environment variable.
-      apiVersion: "client.authentication.k8s.io/v1beta1"
-
-      # Environment variables to set when executing the plugin. Optional.
-      env:
-      - name: "FOO"
-        value: "bar"
-
-      # Arguments to pass when executing the plugin. Optional.
-      args:
-      - "arg1"
-      - "arg2"
-
-      # Text shown to the user when the executable doesn't seem to be present. Optional.
-      installHint: |
-        example-client-go-exec-plugin is required to authenticate
-        to the current cluster.  It can be installed:
-
-        On macOS: brew install example-client-go-exec-plugin
-
-        On Ubuntu: apt-get install example-client-go-exec-plugin
-
-        On Fedora: dnf install example-client-go-exec-plugin
-
-        ...        
-
-      # Whether or not to provide cluster information, which could potentially contain
-      # very large CA data, to this exec plugin as a part of the KUBERNETES_EXEC_INFO
-      # environment variable.
-      provideClusterInfo: true
-
-      # The contract between the exec plugin and the standard input I/O stream. If the
-      # contract cannot be satisfied, this plugin will not be run and an error will be
-      # returned. Valid values are "Never" (this exec plugin never uses standard input),
-      # "IfAvailable" (this exec plugin wants to use standard input if it is available),
-      # or "Always" (this exec plugin requires standard input to function). Optional.
-      # Defaults to "IfAvailable".
-      interactiveMode: Never
-clusters:
-- name: my-cluster
-  cluster:
-    server: "https://172.17.4.100:6443"
-    certificate-authority: "/etc/kubernetes/ca.pem"
-    extensions:
-    - name: client.authentication.k8s.io/exec # reserved extension name for per cluster exec config
-      extension:
-        arbitrary: config
-        this: can be provided via the KUBERNETES_EXEC_INFO environment variable upon setting provideClusterInfo
-        you: ["can", "put", "anything", "here"]
-contexts:
-- name: my-cluster
-  context:
-    cluster: my-cluster
-    user: my-user
-current-context: my-cluster
+"kind": "ExecCredential",
+    "apiVersion": "client.authentication.k8s.io/v1beta1",
+    "spec": {
+        "interactive": false
+    },
+    "status": {
+        "expirationTimestamp": "2023-06-07T12:01:41Z",
+        "token": "ya29.a0AWY7CkkPZyceCkIv6TtpsUYqCXz3KwAnw7MJTr4Rf7a8wUkA1TqIJabwtLK3pWLvn8xOjIOvmkjlaCzR805WwwPV14R9tMt9Ri_gNtu-9CFGdh1we9l3uAfZwLJWALOuOdavHVQIoLiYqG8oni2pJO-2G5uA8H3igd54CR8q-wFnY6QZUFTgq8RZFzTevYTJYa-qz_vr5Lb_ZzzYfawjmAKCJ3DUJei2s-YcgCgaCgYKAXgSARMSFQG1tDrp2hQ0JrXOm89Cuz1howq04Q0238"
+       }
