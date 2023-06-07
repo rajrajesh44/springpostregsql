@@ -22,9 +22,9 @@ env:
   GAR_LOCATION: us-central1 # TODO: update region of the Artifact Registry
   GKE_CLUSTER: springdemo # TODO: update to cluster name
   GKE_ZONE: us-central1-c   # TODO: update to cluster zone
-  DEPLOYMENT_NAME: hello-world1 # TODO: update to deployment name
+  DEPLOYMENT_NAME: hello-world-app # TODO: update to deployment name
   REPOSITORY: samples # TODO: update to Artifact Registry docker repository
-  IMAGE: static-site1
+  IMAGE: static-site
 
 jobs:
   setup-build-publish-deploy:
@@ -69,10 +69,12 @@ jobs:
 
     # Build the Docker image
     - name: Build
-      run: |
-         gcloud builds submit --tag us-central1-docker.pkg.dev/dark-sensor-386805/samples/static-site1 .
-          
-          
+      run: |-
+        docker build \
+          --tag "us-central1-docker.pkg.dev/dark-sensor-386805/samples/static-site:$GITHUB_SHA" \
+          --build-arg GITHUB_SHA="$GITHUB_SHA" \
+          --build-arg GITHUB_REF="$GITHUB_REF" \
+          .
     - name: Set outputs
       id: vars
       run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_SHA
@@ -82,16 +84,16 @@ jobs:
     - name: Configure kubectl
       run: |
           gcloud container clusters get-credentials springdemo --region us-central1-c 
-
-
+    - name: Build Docker image
+      run: |
+          docker build -t static-site:latest .
     - name: Authenticate with Google Container Registry
       run: |
           gcloud auth configure-docker
-
     # Push Docker image to Google Container Registry
     - name: Publish
       run: |-
-        docker push "us-central1-docker.pkg.dev/dark-sensor-386805/samples/static-site1:$GITHUB_SHA"
+        docker push "us-central1-docker.pkg.dev/dark-sensor-386805/samples/static-site:$GITHUB_SHA"
        # Set up kustomize
     - name: Set up Kustomize
       run: |-
@@ -108,8 +110,6 @@ jobs:
   # Deploy the Docker image to the GKE cluster
     - name: Deploy
       run: |-
-         kubectl create deployment hello-world1 --image=us-central1-docker.pkg.dev/dark-sensor-386805/samples/static-site1:latest
-         kubectl expose deployment hello-world1  --type=LoadBalancer --port=8080
-      
-       
-       
+         
+         kubectl create deployment gke-test  --image "us-central1-docker.pkg.dev/dark-sensor-386805/samples/static-site:latest"
+         kubectl expose deployment gke-test   --type=LoadBalancer --port=8000
