@@ -24,7 +24,7 @@ env:
   GKE_ZONE: us-central1-c   # TODO: update to cluster zone
   DEPLOYMENT_NAME: hello-world1 # TODO: update to deployment name
   REPOSITORY: samples # TODO: update to Artifact Registry docker repository
-  IMAGE: static-site
+  IMAGE: static-site1
 
 jobs:
   setup-build-publish-deploy:
@@ -70,7 +70,7 @@ jobs:
     # Build the Docker image
     - name: Build
       run: |
-         gcloud builds submit --tag us-central1-docker.pkg.dev/dark-sensor-386805/samples/static-site .
+         gcloud builds submit --tag us-central1-docker.pkg.dev/dark-sensor-386805/samples/static-site1 .
           
           
     - name: Set outputs
@@ -91,7 +91,7 @@ jobs:
     # Push Docker image to Google Container Registry
     - name: Publish
       run: |-
-        docker push "us-central1-docker.pkg.dev/dark-sensor-386805/samples/static-site:$GITHUB_SHA"
+        docker push "us-central1-docker.pkg.dev/dark-sensor-386805/samples/static-site1:$GITHUB_SHA"
        # Set up kustomize
     - name: Set up Kustomize
       run: |-
@@ -108,7 +108,7 @@ jobs:
   # Deploy the Docker image to the GKE cluster
     - name: Deploy
       run: |-
-         kubectl create deployment hello-world1 --image=us-central1-docker.pkg.dev/dark-sensor-386805/samples/static-site:latest
+         kubectl create deployment hello-world1 --image=us-central1-docker.pkg.dev/dark-sensor-386805/samples/static-site1:latest
          kubectl expose deployment hello-world1  --type=LoadBalancer --port=8080
       
        
