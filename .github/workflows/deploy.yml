@@ -69,7 +69,7 @@ jobs:
 
     # Build the Docker image
     - name: Build
-      run: |-
+      run: |
          gcloud builds submit --tag us-central1-docker.pkg.dev/dark-sensor-386805/samples/static-site .
           
           
@@ -108,7 +108,7 @@ jobs:
   # Deploy the Docker image to the GKE cluster
     - name: Deploy
       run: |-
-         kubectl create deployment hello-world1 --image=static-site:latest
+         kubectl create deployment hello-world1 --image=us-central1-docker.pkg.dev/dark-sensor-386805/samples/static-site:latest
          kubectl expose deployment hello-world1  --type=LoadBalancer --port=8080
       
        
