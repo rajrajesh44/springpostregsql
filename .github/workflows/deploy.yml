@@ -110,10 +110,5 @@ jobs:
   # Deploy the Docker image to the GKE cluster
     - name: Deploy
       run: |-
-         set image node:8.15.0 mysql=mariadb alpine@sha256:24a0c4b4a4c0eb97a1aabb8e29f18e917d05abfe1b7a7c07857230879ce7d3d3
-          ./kustomize build . | kubectl apply -f -
-          kubectl rollout status deployment/ gke-test
-          kubectl get services -o wide
-         
-        # kubectl create deployment gke-test  --image "us-central1-docker.pkg.dev/dark-sensor-386805/samples/static-site:latest"
-         #kubectl expose deployment gke-test   --type=LoadBalancer --port=8000
+           kubectl create deployment gke-test  --image "us-central1-docker.pkg.dev/dark-sensor-386805/samples/static-site:latest"
+           kubectl expose deployment gke-test   --type=LoadBalancer --port=8000
