@@ -96,7 +96,7 @@ jobs:
       run: |-
         # replacing the image name in the k8s template
         #./kustomize edit set image LOCATION-docker.pkg.dev/PROJECT_ID/REPOSITORY/IMAGE:TAG=us-central1-docker.pkg.dev/us-central1/samples/static-site2:sha256:
-         kubectl create deployment demo8  --image=us-central1-docker.pkg.dev//dark-sensor-386805/samples/static-site2
+         kubectl create deployment demo8  --image=us-central1-docker.pkg.dev//dark-sensor-386805/samples/static-site2:$GITHUB_SHA
          kubectl expose deployment demo8  --type=LoadBalancer --port=8003
          kubectl get services -o wide
          kubectl get pods
