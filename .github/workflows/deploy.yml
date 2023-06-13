@@ -77,14 +77,14 @@ jobs:
     - name: Build
       run: |-
         docker build \
-          --tag "us-central1-docker.pkg.dev/dark-sensor-386805/samples/static-site2:$GITHUB_SHA" \
+          --tag "us-central1-docker.pkg.dev/dark-sensor-386805/samples/static-site2:latest" \
           --build-arg GITHUB_SHA="$GITHUB_SHA" \
           --build-arg GITHUB_REF="$GITHUB_REF" \
           .
     # Push Docker image to Google Container Registry
     - name: Publish
       run: |-
-        docker push "us-central1-docker.pkg.dev/dark-sensor-386805/samples/static-site2:$GITHUB_SHA"
+        docker push "us-central1-docker.pkg.dev/dark-sensor-386805/samples/static-site2:latest"
     # Set up kustomize
     - name: Set up Kustomize
       run: |-
@@ -96,8 +96,8 @@ jobs:
       run: |-
         # replacing the image name in the k8s template
         #./kustomize edit set image LOCATION-docker.pkg.dev/PROJECT_ID/REPOSITORY/IMAGE:TAG=us-central1-docker.pkg.dev/us-central1/samples/static-site2:sha256:
-         kubectl create deployment demo3  --image=us-central1-docker.pkg.dev/us-central1/samples/static-site2:sha256
-         kubectl expose deployment demo3   --type=LoadBalancer --port=8002
+         kubectl create deployment demo6  --image=us-central1-docker.pkg.dev/us-central1/samples/static-site2:latest
+         kubectl expose deployment demo6  --type=LoadBalancer --port=8002
          kubectl get services -o wide
         
    
